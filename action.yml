@@ -1,0 +1,26 @@
+name: Checkstyle Results Toolkit
+description: Parse Checkstyle results, summarise results and generate HTML reports
+author: Michael Stringer
+
+inputs:
+  files:
+    description: Glob pattern to match Checkstyle files
+    required: true
+  upload-report:
+    description: If true then upload reports in HTML & JSON formats
+    required: false
+    default: 'true'
+  artifact-name:
+    description: Name of the artifact to store reports in
+    required: false
+  retention-days:
+    description: Number of days to retain report artifact for
+    required: false
+
+outputs:
+  test-results:
+    description: JSON summary of Checkstyle results
+
+runs:
+  using: node16
+  main: dist/index.js

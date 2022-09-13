@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <title>Checkstyle Report</title>
+
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+          'Apple Color Emoji', 'Segoe UI Emoji';
+      }
+
+      table {
+        width: 100%;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .hide-empty .empty {
+        display: none;
+      }
+
+      .file-report h3 {
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
+          monospace;
+        font-size: 0.9rem;
+      }
+
+      .file-report .top {
+        font-size: 1.5rem;
+        margin-right: 0.4rem;
+      }
+
+      .file-report .top a {
+        text-decoration: none;
+      }
+
+      .severity {
+        width: 5.5rem;
+      }
+
+      .line {
+        width: 4rem;
+      }
+
+      td.line {
+        text-align: right;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #0d1117;
+          color: #c9d1d9;
+        }
+
+        tr:nth-child(even) {
+          background-color: #242424;
+        }
+
+        a {
+          color: #58a6ff;
+        }
+      }
+    </style>
+
+    <script>
+      function toggleEmpty() {
+        document.body.classList.toggle('hide-empty');
+
+        if (document.body.classList.contains('hide-empty')) {
+          document.getElementById('toggleEmpty').textContent = 'Hide Empty';
+        } else {
+          document.getElementById('toggleEmpty').textContent = 'Show Empty';
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1>Checkstyle Report</h1>
+
+    <h2 id="summary">Summary</h2>
+
+    <button onclick="toggleEmpty()" id="toggleEmpty">Hide Empty</button>
+
+    <table id="reports">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Errors</th>
+          <th>Warnings</th>
+          <th>Infos</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="total">
+          <td>Total</td>
+          <td class="count"><%= report.summary.error %></td>
+          <td class="count"><%= report.summary.warning %></td>
+          <td class="count"><%= report.summary.info %></td>
+        </tr>
+
+        <% report.files.forEach(function (file) { %>
+        <tr class="<%= file.hasViolations ? '' : 'empty' %>">
+          <td class="file">
+            <a href="#file_<%= file.name.replace(/\//g, '_') %>"><%= file.name %></a>
+          </td>
+          <td class="count"><%= file.summary.error %></td>
+          <td class="count"><%= file.summary.warning %></td>
+          <td class="count"><%= file.summary.info %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <h2>Files</h2>
+
+    <% report.files.forEach(function(file) { %>
+    <section
+      id="file_<%= file.name.replace(/\//g, '_') %>"
+      class="file-report <%= file.hasViolations ? '' : 'empty' %>"
+    >
+      <h3>
+        <span class="top"><a href="#summary">↑</a></span
+        ><%= file.name %>
+      </h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="severity">Severity</th>
+            <th>Description</th>
+            <th class="line">Line</th>
+          </tr>
+
+          <% file.violations.forEach(function(violation) { %>
+          <tr>
+            <td class="severity"><%= violation.severity %></td>
+            <td><%= violation.message %></td>
+            <td class="line"><%= violation.line %></td>
+          </tr>
+
+          <% }) %>
+        </thead>
+      </table>
+    </section>
+    <% }); %>
+  </body>
+</html>

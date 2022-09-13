@@ -1,0 +1,40 @@
+name: CI Test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Test
+        run: npm run build
+
+      - uses: ./
+        id: run-action
+        with:
+          files: .github/workflows/test-data/checkstyle-report.xml
+          upload-report: false
+
+      - name: Verify output
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const assert = require('assert').strict;
+            const data = JSON.parse('${{ steps.run-action.outputs.checkstyle-results }}');
+
+            // summary
+            assert.strictEqual(data.ignored, 0, 'ignored checks');
+            assert.strictEqual(data.info, 0, 'info checks');
+            assert.strictEqual(data.warning, 1, 'warning checks');
+            assert.strictEqual(data.error, 0, 'error checks');

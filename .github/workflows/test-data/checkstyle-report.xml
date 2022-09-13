@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+    <file name="exmaple/src/main/java/com/zestia/greeter/Greeter.java">
+        <error line="16" severity="warning" message="Line is longer than 120 characters (found 155)." source="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck"/>
+    </file>
+    <file name="exmaple/src/test/java/com/zestia/greeter/GreeterTest.java">
+    </file>
+</checkstyle>
