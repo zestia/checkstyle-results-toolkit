@@ -20952,7 +20952,6 @@ var ejs = __nccwpck_require__(8431);
 
 
 async function generateHtmlReport(tmpDir, report) {
-    const oi = __nccwpck_require__.ab + "report.ejs";
     const renderedReport = await ejs.renderFile(__nccwpck_require__.ab + "report.ejs", {
         report,
     });
