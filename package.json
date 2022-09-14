@@ -1,6 +1,6 @@
 {
   "name": "checkstyle-results-toolkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GitHub action for parsing Checkstyle results and generating reports",
   "main": "dist/index.js",
   "scripts": {

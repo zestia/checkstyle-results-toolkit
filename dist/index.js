@@ -20994,6 +20994,10 @@ async function run() {
     const retentionDays = getNumberInput('retention-days');
     const tmpDir = await external_fs_.promises.mkdtemp(external_path_.join(external_os_.tmpdir(), 'checkstyle-results-toolkit-'));
     const inputFiles = await fileGlob.glob();
+    if (!inputFiles.length) {
+        core.warning('Could not find any Checkstyle reports');
+        return;
+    }
     core.debug(`Found ${inputFiles.length} Checkstyle reports`);
     const report = await CHECKSTYLE_LOADER.loadFiles(workspace, inputFiles);
     core.setOutput('checkstyle-results', report.summary);
