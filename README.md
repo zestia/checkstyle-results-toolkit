@@ -14,17 +14,17 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           java-version: 11
-    
+
       - name: Run style checks
         run: sbt checkstyle
-    
+
       - name: Parse Checkstyle Results
         uses: zestia/checkstyle-results-toolkit@v1
         id: style-results
         if: ${{ always() }}
         with:
           files: '**/checkstyle-report.xml'
-    
+
       - name: Echo Style Results
         run: |
           echo "Test Results:"
@@ -39,7 +39,7 @@ jobs:
 ## Options
 
 | Name             | Description                                                                             | Default                               |
-|------------------|-----------------------------------------------------------------------------------------|---------------------------------------|
+| ---------------- | --------------------------------------------------------------------------------------- | ------------------------------------- |
 | `files`          | Glob pattern to match Checkstyle XML files. Multiple matching reports will be combined. | _none_ (required)                     |
 | `upload-report`  | If `true` then an HTML report will be generated & uploaded to `$artifact-name`.         | `true`                                |
 | `artifact-name`  | Name of the artifact to use when uploading HTML report.                                 | `checkstyle-report-${context.job}`    |

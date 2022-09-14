@@ -41,6 +41,12 @@ async function run(): Promise<void> {
   const tmpDir = await fsPromises.mkdtemp(path.join(os.tmpdir(), 'checkstyle-results-toolkit-'));
 
   const inputFiles: string[] = await fileGlob.glob();
+
+  if (!inputFiles.length) {
+    core.warning('Could not find any Checkstyle reports');
+    return;
+  }
+
   core.debug(`Found ${inputFiles.length} Checkstyle reports`);
 
   const report = await CHECKSTYLE_LOADER.loadFiles(workspace, inputFiles);
